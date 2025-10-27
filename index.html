@@ -3,356 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С Днем Рождения! 🎂</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: linear-gradient(135deg, #ffd700, #ff69b4, #87ceeb);
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Звезды */
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Заставка */
-        #splash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .cake-container {
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            margin: 30px 0;
-        }
-
-        .cake-container:hover {
-            transform: scale(1.05);
-        }
-
-        .cake-img {
-            width: 300px;
-            height: 250px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .cake-placeholder {
-            width: 300px;
-            height: 250px;
-            background: linear-gradient(45deg, #ff9999, #ffcc99);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .title {
-            font-size: 3em;
-            color: white;
-            text-shadow: 3px 3px 0 #ff69b4;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .subtitle {
-            font-size: 1.5em;
-            color: white;
-            text-shadow: 2px 2px 0 #ff69b4;
-            margin-bottom: 30px;
-            text-align: center;
-            max-width: 80%;
-        }
-
-        .hint {
-            font-size: 1.2em;
-            color: white;
-            animation: blink 2s infinite;
-            margin-top: 20px;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
-
-        /* Альбом */
-        #album {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
-            z-index: 1001;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .album-title {
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 0 #000;
-        }
-
-        .book-container {
-            position: relative;
-            width: 800px;
-            height: 500px;
-            background: #8b4513;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            display: flex;
-        }
-
-        .page {
-            flex: 1;
-            background: #faf0e6;
-            margin: 10px;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            color: #666;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        .spine {
-            width: 20px;
-            background: #654321;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 100%;
-        }
-
-        .navigation {
-            margin-top: 30px;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-btn {
-            padding: 10px 20px;
-            background: #ff69b4;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            background: #ff1493;
-            transform: translateY(-2px);
-        }
-
-        .nav-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .close-album {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2em;
-        }
-    </style>
+    <title>С Днем Рождения! 🎂 - Фотоальбом воспоминаний</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/icon.jpg" type="image/jpg">
 </head>
 <body>
     <!-- Заставка с тортом -->
-    <div id="splash">
-        <h1 class="title">С Днем Рождения! 🎉</h1>
-        <p class="subtitle">Сегодня ты самый старший из тех, кем ты был, и самый молодой из тех, кем ты будешь. Используй этот день по максимуму!</p>
-        
-        <div class="cake-container" onclick="openAlbum()">
-            <!-- Замените src на вашу картинку торта -->
-            <img src="images/cake.png" alt="Торт" class="cake-img" onerror="showCakePlaceholder()">
+    <div id="splashScreen" class="screen active">
+        <canvas id="splashCanvas"></canvas>
+        <div class="splash-content">
+            <h1 class="birthday-title">Happy Birthday!</h1>
+            <p class="birthday-subtitle">Today is the oldest you have been, and the youngest you will ever be. Make the most of it!</p>
+            <div class="cake-container" id="cakeContainer">
+                <!-- Торт будет нарисован на canvas -->
+            </div>
+            <p class="click-hint" id="clickHint">Click the cake!</p>
         </div>
-        
-        <p class="hint">Кликни на торт, чтобы открыть альбом воспоминаний!</p>
     </div>
 
     <!-- Фотоальбом -->
-    <div id="album">
-        <button class="close-album" onclick="closeAlbum()">✕</button>
-        <h2 class="album-title">Фотоальбом воспоминаний 📖</h2>
-        
-        <div class="book-container">
-            <div class="page" id="leftPage">
-                <!-- Левая страница -->
-            </div>
-            <div class="spine"></div>
-            <div class="page" id="rightPage">
-                <!-- Правая страница -->
-            </div>
-        </div>
-        
-        <div class="navigation">
-            <button class="nav-btn" onclick="prevPage()" id="prevBtn">← Назад</button>
-            <span style="color: white; margin: 0 15px; font-size: 1.2em;" id="pageCounter">Страница 1 из 5</span>
-            <button class="nav-btn" onclick="nextPage()" id="nextBtn">Вперед →</button>
+    <div id="albumScreen" class="screen">
+        <canvas id="albumCanvas"></canvas>
+        <div class="album-controls">
+            <button id="prevBtn" class="nav-btn">← Назад</button>
+            <span id="pageCounter" class="page-counter">Страница 1</span>
+            <button id="nextBtn" class="nav-btn">Вперед →</button>
+            <button id="closeAlbum" class="close-btn">✕ Закрыть</button>
         </div>
     </div>
 
-    <script>
-        // Создаем звезды
-        function createStars() {
-            const starsContainer = document.createElement('div');
-            starsContainer.className = 'stars';
-            document.body.appendChild(starsContainer);
+    <!-- Попап для фото -->
+    <div id="photoPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <img id="popupImage" src="" alt="Воспоминание">
+            <p id="popupCaption"></p>
+        </div>
+    </div>
 
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                // Случайные параметры
-                const size = Math.random() * 3 + 1;
-                const left = Math.random() * 100;
-                const top = Math.random() * 100;
-                const delay = Math.random() * 3;
-                
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.left = `${left}%`;
-                star.style.top = `${top}%`;
-                star.style.animationDelay = `${delay}s`;
-                
-                starsContainer.appendChild(star);
-            }
-        }
-
-        // Заглушка для торта
-        function showCakePlaceholder() {
-            const cakeContainer = document.querySelector('.cake-container');
-            cakeContainer.innerHTML = `
-                <div class="cake-placeholder">
-                    🎂<br>Кликни на торт!
-                </div>
-            `;
-        }
-
-        // Управление альбомом
-        let currentPage = 0;
-        const totalPages = 5; // Измените на ваше количество страниц
-
-        // Пример страниц альбома (замените на ваши фото)
-        const albumPages = [
-            { left: "Обложка альбома", right: "Первая страница воспоминаний" },
-            { left: "Фото 1", right: "Фото 2" },
-            { left: "Фото 3", right: "Фото 4" },
-            { left: "Фото 5", right: "Фото 6" },
-            { left: "Фото 7", right: "Фото 8" }
-        ];
-
-        function openAlbum() {
-            document.getElementById('splash').style.display = 'none';
-            document.getElementById('album').style.display = 'flex';
-            showPage(0);
-        }
-
-        function closeAlbum() {
-            document.getElementById('album').style.display = 'none';
-            document.getElementById('splash').style.display = 'flex';
-        }
-
-        function showPage(pageNum) {
-            currentPage = pageNum;
-            const page = albumPages[pageNum];
-            
-            document.getElementById('leftPage').innerHTML = `
-                <div style="text-align: center; padding: 20px;">
-                    <h3>${page.left}</h3>
-                    <div style="width: 200px; height: 150px; background: #ddd; margin: 20px auto; display: flex; align-items: center; justify-content: center; border-radius: 10px;">
-                        📸 Фото
-                    </div>
-                    <p>Здесь ваше прекрасное воспоминание</p>
-                </div>
-            `;
-            
-            document.getElementById('rightPage').innerHTML = `
-                <div style="text-align: center; padding: 20px;">
-                    <h3>${page.right}</h3>
-                    <div style="width: 200px; height: 150px; background: #ddd; margin: 20px auto; display: flex; align-items: center; justify-content: center; border-radius: 10px;">
-                        📸 Фото
-                    </div>
-                    <p>Еще одно замечательное воспоминание</p>
-                </div>
-            `;
-
-            // Обновляем навигацию
-            document.getElementById('prevBtn').disabled = pageNum === 0;
-            document.getElementById('nextBtn').disabled = pageNum === totalPages - 1;
-            document.getElementById('pageCounter').textContent = `Страница ${pageNum + 1} из ${totalPages}`;
-        }
-
-        function nextPage() {
-            if (currentPage < totalPages - 1) {
-                showPage(currentPage + 1);
-            }
-        }
-
-        function prevPage() {
-            if (currentPage > 0) {
-                showPage(currentPage - 1);
-            }
-        }
-
-        // Инициализация
-        createStars();
-        
-        // Добавляем обработчик клавиш для перелистывания
-        document.addEventListener('keydown', (e) => {
-            if (document.getElementById('album').style.display === 'flex') {
-                if (e.key === 'ArrowRight') nextPage();
-                if (e.key === 'ArrowLeft') prevPage();
-                if (e.key === 'Escape') closeAlbum();
-            }
-        });
-    </script>
+    <script src="js/splash.js"></script>
+    <script src="js/album.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
