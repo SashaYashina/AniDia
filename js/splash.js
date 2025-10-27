@@ -62,8 +62,7 @@ class SplashView {
         // Торт
         this.drawCake();
         
-        // Текст
-        this.drawText();
+        // Текст на canvas (убрали, так как он теперь в HTML)
     }
 
     drawBackground() {
@@ -133,34 +132,9 @@ class SplashView {
         }
     }
 
-    drawText() {
-        const time = Date.now() * 0.001;
-        
-        // Основной заголовок
-        this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 48px Comic Sans MS';
-        this.ctx.textAlign = 'center';
-        this.ctx.textBaseline = 'top';
-        
-        const title = "Happy Birthday!";
-        this.ctx.fillText(title, this.canvas.width / 2, 100);
-        
-        // Добавляем тень тексту
-        this.ctx.strokeStyle = '#ff69b4';
-        this.ctx.lineWidth = 3;
-        this.ctx.strokeText(title, this.canvas.width / 2, 100);
-        
-        // Подсказка с миганием
-        const alpha = Math.sin(time * 3) * 0.3 + 0.7;
-        this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        this.ctx.font = 'italic 18px Segoe Script';
-        
-        const hint = "Click the cake!";
-        this.ctx.fillText(hint, this.canvas.width / 2, this.canvas.height - 80);
-    }
-
     handleCakeClick() {
         if (this.transitioning) return;
+        console.log('Торт кликнут!');
         this.startTransition();
     }
 
@@ -176,7 +150,7 @@ class SplashView {
         const cakeRadius = 200;
         
         const distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
-        this.canvas.style.cursor = distance < cakeRadius ? 'pointer' : 'default';
+        document.getElementById('cakeContainer').style.cursor = distance < cakeRadius ? 'pointer' : 'default';
     }
 
     startTransition() {
