@@ -133,10 +133,28 @@ class SplashView {
     }
 
     handleCakeClick() {
-        if (this.transitioning) return;
-        console.log('Торт кликнут!');
-        this.startTransition();
-    }
+    if (this.transitioning) return;
+    console.log('Торт кликнут! Начинаем переход...');
+    this.startTransition();
+}
+
+startTransition() {
+    this.transitioning = true;
+    console.log('Переход начался');
+    
+    // Добавим визуальную обратную связь
+    document.getElementById('cakeContainer').style.transform = 'scale(0.95)';
+    
+    // Анимация перехода
+    setTimeout(() => {
+        console.log('Переход завершен, открываем альбом');
+        if (typeof window.showAlbum === 'function') {
+            window.showAlbum();
+        } else {
+            console.error('Функция showAlbum не найдена!');
+        }
+    }, 500);
+
 
     handleHover(event) {
         if (this.transitioning) return;
