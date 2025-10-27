@@ -33,9 +33,28 @@ canvas {
 }
 
 /* Стили для заставки */
+/* Исправление для заставки */
+#splashScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#splashCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Canvas под контентом */
+    pointer-events: none; /* Canvas не перехватывает клики */
+}
+
 .splash-content {
     position: relative;
-    z-index: 10;
+    z-index: 10; /* Контент поверх canvas */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,8 +62,15 @@ canvas {
     height: 100%;
     text-align: center;
     color: white;
-    pointer-events: none;
+    pointer-events: none; /* Весь контент не кликабелен по умолчанию */
     padding-top: 80px;
+}
+
+.cake-container {
+    pointer-events: auto !important; /* Торт кликабелен */
+    cursor: pointer !important;
+    z-index: 1000 !important;
+    position: relative;
 }
 
 .birthday-title {
