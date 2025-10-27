@@ -2,10 +2,6 @@ class SplashView {
     constructor() {
         this.canvas = document.getElementById('splashCanvas');
         this.ctx = this.canvas.getContext('2d');
-        this.stars = [];
-        this.cakeImage = null;
-        this.transitioning = false;
-        
         this.init();
     }
 
@@ -13,13 +9,16 @@ class SplashView {
         this.resize();
         window.addEventListener('resize', () => this.resize());
         
-        this.loadImages();
-        this.createStars();
-        this.startAnimation();
+        // Прямой обработчик на контейнер торта
+        const cakeContainer = document.getElementById('cakeContainer');
+        cakeContainer.addEventListener('click', () => {
+            console.log('Клик по торту!');
+            if (typeof window.showAlbum === 'function') {
+                window.showAlbum();
+            }
+        });
         
-        // Обработчики событий
-        document.getElementById('cakeContainer').addEventListener('click', () => this.handleCakeClick());
-        this.canvas.addEventListener('mousemove', (e) => this.handleHover(e));
+        this.startAnimation();
     }
 
     resize() {
@@ -28,44 +27,8 @@ class SplashView {
         this.draw();
     }
 
-    loadImages() {
-        this.cakeImage = new Image();
-        this.cakeImage.src = 'images/cake.png';
-        this.cakeImage.onerror = () => {
-            console.log('Торт не загружен, используем заглушку');
-            this.cakeImage = null;
-        };
-    }
-
-    createStars() {
-        for (let i = 0; i < 100; i++) {
-            this.stars.push({
-                x: Math.random() * this.canvas.width,
-                y: Math.random() * (this.canvas.height - 250),
-                size: 1 + Math.random() * 3,
-                baseBrightness: 0.3 + Math.random() * 0.5,
-                pulseSpeed: 0.5 + Math.random()
-            });
-        }
-    }
-
     draw() {
-        // Очистка
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // Фон
-        this.drawBackground();
-        
-        // Звезды
-        this.drawStars();
-        
-        // Торт
-        this.drawCake();
-        
-        // Текст на canvas (убрали, так как он теперь в HTML)
-    }
-
-    drawBackground() {
+        // Простой фон
         const gradient = this.ctx.createRadialGradient(
             this.canvas.width / 2, this.canvas.height / 2, 0,
             this.canvas.width / 2, this.canvas.height / 2, this.canvas.width * 0.8
@@ -77,109 +40,6 @@ class SplashView {
         
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    drawStars() {
-        const currentTime = Date.now() * 0.005;
-        
-        this.stars.forEach(star => {
-            const time = currentTime * star.pulseSpeed;
-            let brightness = star.baseBrightness + Math.sin(time) * 0.75;
-            brightness = Math.max(0.1, Math.min(1.0, brightness));
-            
-            this.ctx.fillStyle = `rgba(255, 255, 255, ${brightness})`;
-            this.ctx.beginPath();
-            this.ctx.arc(star.x, star.y, star.size / 2, 0, Math.PI * 2);
-            this.ctx.fill();
-        });
-    }
-
-    drawCake() {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const cakeWidth = 400;
-        const cakeHeight = 350;
-
-        if (this.cakeImage && this.cakeImage.complete) {
-            this.ctx.drawImage(
-                this.cakeImage,
-                centerX - cakeWidth / 2,
-                centerY - cakeHeight / 3,
-                cakeWidth,
-                cakeHeight
-            );
-        } else {
-            // Заглушка для торта
-            this.ctx.fillStyle = 'rgba(255, 204, 153, 0.9)';
-            this.ctx.strokeStyle = 'white';
-            this.ctx.lineWidth = 3;
-            
-            this.ctx.beginPath();
-            this.ctx.roundRect(
-                centerX - cakeWidth / 2,
-                centerY - cakeHeight / 3,
-                cakeWidth,
-                cakeHeight,
-                20
-            );
-            this.ctx.fill();
-            this.ctx.stroke();
-            
-            this.ctx.fillStyle = 'white';
-            this.ctx.font = '24px Comic Sans MS';
-            this.ctx.textAlign = 'center';
-            this.ctx.fillText('🎂 Кликни на торт!', centerX, centerY + 50);
-        }
-    }
-
-    handleCakeClick() {
-    if (this.transitioning) return;
-    console.log('Торт кликнут! Начинаем переход...');
-    this.startTransition();
-}
-
-startTransition() {
-    this.transitioning = true;
-    console.log('Переход начался');
-    
-    // Добавим визуальную обратную связь
-    document.getElementById('cakeContainer').style.transform = 'scale(0.95)';
-    
-    // Анимация перехода
-    setTimeout(() => {
-        console.log('Переход завершен, открываем альбом');
-        if (typeof window.showAlbum === 'function') {
-            window.showAlbum();
-        } else {
-            console.error('Функция showAlbum не найдена!');
-        }
-    }, 500);
-
-
-    handleHover(event) {
-        if (this.transitioning) return;
-        
-        const rect = this.canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const cakeRadius = 200;
-        
-        const distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
-        document.getElementById('cakeContainer').style.cursor = distance < cakeRadius ? 'pointer' : 'default';
-    }
-
-    startTransition() {
-        this.transitioning = true;
-        
-        // Анимация перехода
-        setTimeout(() => {
-            if (typeof window.showAlbum === 'function') {
-                window.showAlbum();
-            }
-        }, 1000);
     }
 
     startAnimation() {
