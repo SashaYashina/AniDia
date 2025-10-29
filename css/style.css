@@ -110,7 +110,7 @@ body {
     50% { opacity: 0.5; }
 }
 
-/* Альбом - ТОЛЬКО ИЗОБРАЖЕНИЯ БЕЗ РАМОК */
+/* Альбом - УМЕНЬШЕННЫЕ СТРАНИЦЫ */
 #album-screen {
     background: #000;
 }
@@ -127,35 +127,37 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: transparent !important;
-    padding: 0 !important;
-    box-shadow: none !important;
+    background: transparent;
+    padding: 0;
+    gap: 20px; /* Расстояние между страницами в развороте */
 }
 
 .album-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    background: transparent;
 }
 
+/* РАЗМЕР КАК У ОБЛОЖКИ */
 .album-page img {
-    max-width: 100vw;
-    max-height: 100vh;
+    max-width: 600px;  /* Такой же размер как у обложки */
+    max-height: 600px;
+    width: auto;
+    height: auto;
     object-fit: contain;
 }
 
-/* Убираем все рамки и корешки */
-.left-page, .right-page {
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-}
-
-.album-spine {
-    display: none !important;
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .album-page img {
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+    
+    .album-book {
+        gap: 10px;
+    }
 }
 
 .navigation {
