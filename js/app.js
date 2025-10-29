@@ -3,20 +3,20 @@ class BirthdayApp {
         this.currentSpread = 0; // 0 = обложка (закрытый альбом)
         this.totalSpreads = 0;
         
-        // Имена ваших PNG файлов
+        // ПУТИ К ФАЙЛАМ ДЛЯ ВАШЕЙ СТРУКТУРЫ
         this.pageImages = [
-            'images/cover.png',    // 0 - обложка (закрытый альбом)
-            'images/page0.png',    // 1
-            'images/page1.png',    // 2  
-            'images/page2.png',    // 3
-            'images/page3.png',    // 4
-            'images/page4.png',    // 5
-            'images/page5.png',    // 6
-            'images/page6.png',    // 7
-            'images/page7.png',    // 8
-            'images/page8.png',    // 9
-            'images/page9.png',    // 10
-            'images/page10.png'    // 11
+            'images/cover.png',           // 0 - обложка (закрытый альбом)
+            'images/album/page0.png',     // 1 - левая страница первого разворота
+            'images/album/page1.png',     // 2 - правая страница первого разворота  
+            'images/album/page2.png',     // 3 - левая страница второго разворота
+            'images/album/page3.png',     // 4 - правая страница второго разворота
+            'images/album/page4.png',     // 5 - левая страница третьего разворота
+            'images/album/page5.png',     // 6 - правая страница третьего разворота
+            'images/album/page6.png',     // 7 - левая страница четвертого разворота
+            'images/album/page7.png',     // 8 - правая страница четвертого разворота
+            'images/album/page8.png',     // 9 - левая страница пятого разворота
+            'images/album/page9.png',     // 10 - правая страница пятого разворота
+            'images/album/page10.png'     // 11 - левая страница шестого разворота
         ];
         
         this.init();
@@ -25,6 +25,7 @@ class BirthdayApp {
     init() {
         console.log('🚀 Инициализация приложения...');
         this.totalSpreads = Math.ceil(this.pageImages.length / 2);
+        console.log(`Всего изображений: ${this.pageImages.length}`);
         console.log(`Всего разворотов: ${this.totalSpreads}`);
         
         this.createStars();
@@ -95,13 +96,14 @@ class BirthdayApp {
     }
 
     preloadImages() {
+        console.log('🖼️ Начинаем предзагрузку изображений...');
         this.pageImages.forEach((src, index) => {
             const img = new Image();
             img.onload = () => {
-                console.log(`✅ Загружено: ${src}`);
+                console.log(`✅ Загружено: ${src} (индекс: ${index})`);
             };
             img.onerror = () => {
-                console.log(`❌ Ошибка загрузки: ${src}`);
+                console.log(`❌ ОШИБКА загрузки: ${src} (индекс: ${index})`);
             };
             img.src = src;
         });
@@ -134,36 +136,55 @@ class BirthdayApp {
     }
 
     showCurrentSpread() {
-        console.log(`📄 Показываем: ${this.currentSpread === 0 ? 'ОБЛОЖКА' : 'Разворот ' + this.currentSpread}`);
+        console.log(`📄 Показываем spread ${this.currentSpread}`);
         
         const leftImg = document.getElementById('left-page-img');
         const rightImg = document.getElementById('right-page-img');
         const pageCounter = document.getElementById('page-counter');
         
-        if (!leftImg || !rightImg) return;
+        if (!leftImg || !rightImg) {
+            console.log('❌ Элементы страниц не найдены!');
+            return;
+        }
 
         // Сбрасываем отображение
         leftImg.style.display = 'none';
         rightImg.style.display = 'none';
+        leftImg.src = '';
+        rightImg.src = '';
 
         if (this.currentSpread === 0) {
             // ПОКАЗЫВАЕМ ТОЛЬКО ОБЛОЖКУ (закрытый альбом)
+            console.log(`🖼️ Загружаем обложку: ${this.pageImages[0]}`);
             rightImg.src = this.pageImages[0];
             rightImg.style.display = 'block';
+            rightImg.onerror = () => {
+                console.log(`❌ Ошибка отображения обложки: ${this.pageImages[0]}`);
+            };
             if (pageCounter) pageCounter.textContent = 'Обложка';
         } else {
             // Показываем разворот (левая + правая страницы)
             const leftPageIndex = this.currentSpread * 2 - 1;
             const rightPageIndex = this.currentSpread * 2;
 
+            console.log(`📖 Разворот ${this.currentSpread}: левая=${leftPageIndex}, правая=${rightPageIndex}`);
+
             if (leftPageIndex < this.pageImages.length) {
+                console.log(`← Левая страница: ${this.pageImages[leftPageIndex]}`);
                 leftImg.src = this.pageImages[leftPageIndex];
                 leftImg.style.display = 'block';
+                leftImg.onerror = () => {
+                    console.log(`❌ Ошибка отображения левой страницы: ${this.pageImages[leftPageIndex]}`);
+                };
             }
 
             if (rightPageIndex < this.pageImages.length) {
+                console.log(`→ Правая страница: ${this.pageImages[rightPageIndex]}`);
                 rightImg.src = this.pageImages[rightPageIndex];
                 rightImg.style.display = 'block';
+                rightImg.onerror = () => {
+                    console.log(`❌ Ошибка отображения правой страницы: ${this.pageImages[rightPageIndex]}`);
+                };
             }
             
             if (pageCounter) {
@@ -179,6 +200,8 @@ class BirthdayApp {
             this.currentSpread++;
             console.log(`➡️ Переход к развороту ${this.currentSpread}`);
             this.showCurrentSpread();
+        } else {
+            console.log('⏹️ Достигнут конец альбома');
         }
     }
 
@@ -187,6 +210,8 @@ class BirthdayApp {
             this.currentSpread--;
             console.log(`⬅️ Возврат к ${this.currentSpread === 0 ? 'обложке' : 'развороту ' + this.currentSpread}`);
             this.showCurrentSpread();
+        } else {
+            console.log('⏹️ Достигнуто начало альбома');
         }
     }
 
@@ -196,10 +221,12 @@ class BirthdayApp {
 
         if (prevBtn) {
             prevBtn.disabled = this.currentSpread === 0;
+            console.log(`⬅️ Кнопка "Назад": ${prevBtn.disabled ? 'отключена' : 'активна'}`);
         }
         
         if (nextBtn) {
             nextBtn.disabled = this.currentSpread >= this.totalSpreads - 1;
+            console.log(`➡️ Кнопка "Вперед": ${nextBtn.disabled ? 'отключена' : 'активна'}`);
         }
     }
 }
