@@ -1,22 +1,21 @@
 class BirthdayApp {
     constructor() {
-        this.currentSpread = 0; // 0 = обложка (закрытый альбом)
+        this.currentSpread = 0;
         this.totalSpreads = 0;
         
-        // ПУТИ К ФАЙЛАМ ДЛЯ ВАШЕЙ СТРУКТУРЫ
+        // ПУТИ К СТРАНИЦАМ АЛЬБОМА
         this.pageImages = [
-            'images/cover.png',           // 0 - обложка (закрытый альбом)
-            'images/album/page0.png',     // 1 - левая страница первого разворота
-            'images/album/page1.png',     // 2 - правая страница первого разворота  
-            'images/album/page2.png',     // 3 - левая страница второго разворота
-            'images/album/page3.png',     // 4 - правая страница второго разворота
-            'images/album/page4.png',     // 5 - левая страница третьего разворота
-            'images/album/page5.png',     // 6 - правая страница третьего разворота
-            'images/album/page6.png',     // 7 - левая страница четвертого разворота
-            'images/album/page7.png',     // 8 - правая страница четвертого разворота
-            'images/album/page8.png',     // 9 - левая страница пятого разворота
-            'images/album/page9.png',     // 10 - правая страница пятого разворота
-            'images/album/page10.png'     // 11 - левая страница шестого разворота
+            'images/album/cover.png',     // 0 - обложка
+            'images/album/0.png',         // 1  
+            'images/album/1.png',         // 2
+            'images/album/2.png',         // 3
+            'images/album/3.png',         // 4
+            'images/album/4.png',         // 5
+            'images/album/5.png',         // 6
+            'images/album/6.png',         // 7
+            'images/album/8.png',         // 8
+            'images/album/9.png',         // 9
+            'images/album/10.png'         // 10
         ];
         
         this.init();
