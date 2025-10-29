@@ -3,45 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С Днем Рождения! 🎂 - Фотоальбом воспоминаний</title>
+    <title>С Днем Рождения!</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="images/icon.jpg" type="image/jpg">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
-    <!-- Заставка с тортом -->
-    <div id="splashScreen" class="screen active">
-        <canvas id="splashCanvas"></canvas>
+    <!-- Заставка -->
+    <div id="splash-screen" class="screen active">
+        <canvas id="splash-canvas"></canvas>
         <div class="splash-content">
             <h1 class="birthday-title">Happy Birthday!</h1>
-            <p class="birthday-subtitle">Today is the oldest you have been, and the youngest you will ever be. Make the most of it!</p>
-            <div class="cake-container" id="cakeContainer">
-                <!-- Торт будет нарисован на canvas -->
+            <p class="birthday-wish">Today is the oldest you have been, and the youngest you will ever be. Make the most of it!</p>
+            <div class="cake-container">
+                <img src="images/cake.png" alt="Торт" id="cake-image" class="cake">
             </div>
-            <p class="click-hint" id="clickHint">Click the cake!</p>
+            <p class="hint-text">Кликни на торт!</p>
         </div>
     </div>
 
     <!-- Фотоальбом -->
-    <div id="albumScreen" class="screen">
-        <canvas id="albumCanvas"></canvas>
-        <div class="album-controls">
-            <button id="prevBtn" class="nav-btn">← Назад</button>
-            <span id="pageCounter" class="page-counter">Страница 1</span>
-            <button id="nextBtn" class="nav-btn">Вперед →</button>
-            <button id="closeAlbum" class="close-btn">✕ Закрыть</button>
+    <div id="album-screen" class="screen">
+        <div class="album-container">
+            <div class="album-page left-page">
+                <img id="left-page-img" src="" alt="Левая страница">
+            </div>
+            <div class="album-page right-page">
+                <img id="right-page-img" src="" alt="Правая страница">
+            </div>
+            <div class="album-spine"></div>
         </div>
-    </div>
-    <!-- Добавьте эту кнопку временно для тестирования -->
-    <div style="position: fixed; top: 10px; left: 10px; z-index: 10000;">
-        <button onclick="window.showAlbum()" style="padding: 10px; background: red; color: white;">Тест: Открыть альбом</button>
-    </div>
-
-    <!-- Попап для фото -->
-    <div id="photoPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-popup">&times;</span>
-            <img id="popupImage" src="" alt="Воспоминание">
-            <p id="popupCaption"></p>
+        <div class="navigation">
+            <button id="prev-btn" class="nav-btn">‹</button>
+            <button id="next-btn" class="nav-btn">›</button>
         </div>
     </div>
 
