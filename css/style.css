@@ -20,101 +20,146 @@ body {
 }
 
 .screen.active {
-    display: block;
-}
-
-/* Заставка */
-#splash-screen {
-    background: linear-gradient(45deg, #ff0066, #ffcc00, #00ccff, #ff0066);
-    background-size: 400% 400%;
-    animation: gradientShift 10s ease infinite;
-}
-
-#splash-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.splash-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    color: white;
-    padding-top: 50px;
-}
-
-.birthday-title {
-    font-family: 'Comic Sans MS', cursive;
-    font-size: 3rem;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    animation: bounce 2s infinite;
-}
-
-.birthday-wish {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto 40px;
-    line-height: 1.6;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-.cake-container {
-    margin: 40px auto;
-}
-
-.cake {
-    width: 300px;
-    height: auto;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
-}
-
-.cake:hover {
-    transform: scale(1.05) rotate(5deg);
-}
-
-.hint-text {
-    font-family: 'Segoe Script', cursive;
-    font-size: 1.5rem;
-    margin-top: 30px;
-    animation: blink 2s infinite;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-/* Альбом */
-#album-screen {
-    background: url('../images/background.jpg') center/cover;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+/* Заставка */
+#splash-screen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.stars-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+.splash-content {
+    text-align: center;
+    color: white;
+    z-index: 10;
+    padding: 20px;
+    max-width: 800px;
+}
+
+.birthday-title {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.birthday-wish {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: 0 auto 40px;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    max-width: 600px;
+}
+
+.cake-container {
+    margin: 30px auto;
+}
+
+.cake {
+    width: min(400px, 80vw);
+    height: auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+
+.cake:hover {
+    transform: scale(1.05);
+}
+
+.hint-text {
+    font-family: 'Segoe Script', cursive;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    margin-top: 20px;
+    animation: blink 2s infinite;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Альбом */
+#album-screen {
+    background: #2c3e50;
+    position: relative;
+}
+
+.album-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/background.png') center/cover;
+    opacity: 0.8;
+}
+
 .album-container {
     position: relative;
-    width: 800px;
-    height: 500px;
+    z-index: 2;
     display: flex;
-    perspective: 1500px;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.album-book {
+    display: flex;
+    position: relative;
+    background: #8b4513;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 
 .album-page {
-    width: 400px;
-    height: 500px;
-    position: relative;
+    width: min(400px, 40vw);
+    height: min(500px, 60vh);
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
 
 .album-page img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .left-page {
@@ -128,40 +173,86 @@ body {
 }
 
 .album-spine {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 100%;
-    background: #000;
-    z-index: -1;
+    width: 30px;
+    background: #5d4037;
+    margin: 0 -5px;
+    position: relative;
+    z-index: 1;
 }
 
 .navigation {
-    margin-top: 30px;
+    position: relative;
+    z-index: 2;
     display: flex;
     gap: 20px;
+    align-items: center;
+    margin-bottom: 40px;
+    background: rgba(255,255,255,0.9);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .nav-btn {
-    width: 60px;
-    height: 60px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.8);
-    font-size: 2rem;
+    border-radius: 25px;
+    background: #3498db;
+    color: white;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-weight: bold;
 }
 
-.nav-btn:hover {
-    background: white;
-    transform: scale(1.1);
+.nav-btn:hover:not(:disabled) {
+    background: #2980b9;
+    transform: translateY(-2px);
 }
 
 .nav-btn:disabled {
-    opacity: 0.3;
+    background: #bdc3c7;
     cursor: not-allowed;
     transform: none;
+}
+
+#page-counter {
+    font-weight: bold;
+    color: #2c3e50;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .album-book {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .album-page {
+        width: 90vw;
+        height: 50vh;
+    }
+    
+    .left-page {
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 10px;
+    }
+    
+    .right-page {
+        border-radius: 0 0 10px 10px;
+    }
+    
+    .album-spine {
+        width: 100%;
+        height: 10px;
+        margin: 5px 0;
+    }
+    
+    .navigation {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
 }
