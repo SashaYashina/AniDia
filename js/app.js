@@ -21,10 +21,7 @@ class BirthdayApp {
     }
 
     init() {
-        console.log('🚀 Инициализация приложения...');
         this.totalSpreads = Math.ceil(this.pageImages.length / 2);
-        console.log(`Всего изображений: ${this.pageImages.length}`);
-        
         this.createStars();
         this.setupEventListeners();
         this.preloadImages();
@@ -40,16 +37,12 @@ class BirthdayApp {
         for (let i = 0; i < starCount; i++) {
             const star = document.createElement('div');
             star.className = 'star';
-            
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
-            
             const size = 1 + Math.random() * 3;
             star.style.width = size + 'px';
             star.style.height = size + 'px';
-            
             star.style.animationDelay = Math.random() * 3 + 's';
-            
             starsBg.appendChild(star);
         }
     }
@@ -65,39 +58,19 @@ class BirthdayApp {
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
         
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                this.previousSpread();
-            });
-        }
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                this.nextSpread();
-            });
-        }
+        if (prevBtn) prevBtn.addEventListener('click', () => this.previousSpread());
+        if (nextBtn) nextBtn.addEventListener('click', () => this.nextSpread());
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                this.previousSpread();
-            } else if (e.key === 'ArrowRight') {
-                this.nextSpread();
-            } else if (e.key === 'Escape') {
-                this.showSplash();
-            }
+            if (e.key === 'ArrowLeft') this.previousSpread();
+            else if (e.key === 'ArrowRight') this.nextSpread();
+            else if (e.key === 'Escape') this.showSplash();
         });
     }
 
     preloadImages() {
-        console.log('🖼️ Начинаем предзагрузку изображений...');
-        this.pageImages.forEach((src, index) => {
+        this.pageImages.forEach((src) => {
             const img = new Image();
-            img.onload = () => {
-                console.log(`✅ Загружено: ${src}`);
-            };
-            img.onerror = () => {
-                console.log(`❌ ОШИБКА загрузки: ${src}`);
-            };
             img.src = src;
         });
     }
@@ -105,11 +78,9 @@ class BirthdayApp {
     showAlbum() {
         const splash = document.getElementById('splash-screen');
         const album = document.getElementById('album-screen');
-        
         if (splash && album) {
             splash.classList.remove('active');
             album.classList.add('active');
-            
             this.currentSpread = 0;
             this.showCurrentSpread();
         }
@@ -118,7 +89,6 @@ class BirthdayApp {
     showSplash() {
         const splash = document.getElementById('splash-screen');
         const album = document.getElementById('album-screen');
-        
         if (splash && album) {
             album.classList.remove('active');
             splash.classList.add('active');
@@ -129,22 +99,20 @@ class BirthdayApp {
         const leftImg = document.getElementById('left-page-img');
         const rightImg = document.getElementById('right-page-img');
         const pageCounter = document.getElementById('page-counter');
-        const albumBook = document.querySelector('.album-book');
         
         if (!leftImg || !rightImg) return;
 
-        // Сбрасываем отображение
+        // Скрываем обе страницы
         leftImg.style.display = 'none';
         rightImg.style.display = 'none';
 
         if (this.currentSpread === 0) {
-            // ПОКАЗЫВАЕМ ТОЛЬКО ОБЛОЖКУ
+            // Только обложка
             rightImg.src = this.pageImages[0];
             rightImg.style.display = 'block';
-            if (albumBook) albumBook.classList.remove('show-spread');
             if (pageCounter) pageCounter.textContent = 'Обложка';
         } else {
-            // Показываем разворот
+            // Разворот
             const leftPageIndex = this.currentSpread * 2 - 1;
             const rightPageIndex = this.currentSpread * 2;
 
@@ -158,9 +126,8 @@ class BirthdayApp {
                 rightImg.style.display = 'block';
             }
             
-            if (albumBook) albumBook.classList.add('show-spread');
             if (pageCounter) {
-                pageCounter.textContent = `Страница ${this.currentSpread} из ${this.totalSpreads - 1}`;
+                pageCounter.textContent = `Страница ${this.currentSpread}`;
             }
         }
 
@@ -185,13 +152,8 @@ class BirthdayApp {
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
 
-        if (prevBtn) {
-            prevBtn.disabled = this.currentSpread === 0;
-        }
-        
-        if (nextBtn) {
-            nextBtn.disabled = this.currentSpread >= this.totalSpreads - 1;
-        }
+        if (prevBtn) prevBtn.disabled = this.currentSpread === 0;
+        if (nextBtn) nextBtn.disabled = this.currentSpread >= this.totalSpreads - 1;
     }
 }
 
