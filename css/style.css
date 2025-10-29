@@ -110,7 +110,7 @@ body {
     50% { opacity: 0.5; }
 }
 
-/* Альбом - УПРОЩЕННАЯ ВЕРСИЯ */
+/* Альбом - ТОЛЬКО ИЗОБРАЖЕНИЯ БЕЗ РАМОК */
 #album-screen {
     background: #000;
 }
@@ -123,10 +123,22 @@ body {
     height: 100%;
 }
 
+.album-book {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
 .album-page {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .album-page img {
@@ -135,15 +147,15 @@ body {
     object-fit: contain;
 }
 
-/* Скрываем левую страницу и корешок когда показываем обложку */
-.left-page, .album-spine {
-    display: none;
+/* Убираем все рамки и корешки */
+.left-page, .right-page {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
 }
 
-/* Показываем обе страницы только для разворотов */
-.show-spread .left-page,
-.show-spread .album-spine {
-    display: block;
+.album-spine {
+    display: none !important;
 }
 
 .navigation {
