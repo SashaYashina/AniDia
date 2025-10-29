@@ -112,7 +112,7 @@ body {
 
 /* Альбом - УМЕНЬШЕННЫЕ СТРАНИЦЫ */
 #album-screen {
-    background: url('../images/album/background.jpg') center/cover;
+    background: #A0522D; 
 }
 
 .album-container {
